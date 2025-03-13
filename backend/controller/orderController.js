@@ -2,7 +2,7 @@ import orderModel from "../models/orderModel.js"
 import userModel from "../models/userModel.js"
 import Stripe from 'stripe'
 
-//global vvariables
+//global variables
 const currency='inr'
 const deliveryCharge=10
 
@@ -21,6 +21,7 @@ const placeOrder=async(req,res)=>{
             address,
             amount,
             paymentMethod:"COD",
+            payment:false,
             date:Date.now()
         }
         const newOrder=new orderModel(orderData)
@@ -35,17 +36,11 @@ const placeOrder=async(req,res)=>{
         res.json({success:false,message:error.message})
         
     }
-
 }
 
 
 //placing orders using stride method
 const placeOrderStripe=async(req,res)=>{
-
-}
-
-//placing orders using RazorPay method
-const placeOrderRazorPay=async(req,res)=>{
     try{
         const {userId,items,amount,address}=req.body
         const {origin}=req.headers;
@@ -66,6 +61,7 @@ const placeOrderRazorPay=async(req,res)=>{
             price_data:{
                 currency:currency,
                 product_data:{
+                    image:item.image,
                     name:item.name
                 },
                 unit_amount:item.price*100
@@ -82,17 +78,23 @@ const placeOrderRazorPay=async(req,res)=>{
             },
             quantity:1
         })
+        
+        res.json({success:true,session_url:session_url})
         const session=await stripe.checkout.sessions.create({
             success_url:`${origin}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url:`${origin}/verify?success=true&orderId=${newOrder._id}`,
             line_items,
             mode:'payment',
         })
-        res.json({success:true,session_url:session_url})
     }catch(error){
         console.log(error);
         res.json({success:false,message:error.message})
     }
+}
+
+//placing orders using RazorPay method
+const placeOrderRazorPay=async(req,res)=>{
+    
 }
 
 //verify stripe
@@ -142,11 +144,12 @@ const updateStatus=async(req,res)=>{
     try{
         const {orderId,status}=req.body
         await orderModel.findByIdAndUpdate(orderId,{status})
-        res.json({success:true,message:error.message})
+        res.json({success:true,message:'Status Updated'})
+        
     }catch(error){
-
+        console.log(error)
+        res.json({success:false,message:error.message})
     }
-
 }
 
 export {verifyStripe,placeOrder,placeOrderRazorPay,placeOrderStripe,allOrders,userOrders,updateStatus}

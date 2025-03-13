@@ -6,7 +6,7 @@ import {backendUrl, currency} from '../App'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
 
-const Orders = () => {
+const Orders = ({token}) => {
 
   const [orders,setOrders]=useState([])
 
@@ -27,17 +27,17 @@ const Orders = () => {
 
     }
 
-    const statusHandler=async(event,orderId)=>{
-      try{
-        const response = await axios.post(backendUrl+'/api/order/status',{orderId,status:event.target.value},{headers:{token}})
-        if(response.data.success){
-          await fetchAllOrders()
-        }
-      }catch(error){
-        console.log(error);
-        toast.error(response.data.message)
-        
+  }
+
+  const statusHandler = async (event,orderId) => {
+    try{
+      const response = await axios.post(backendUrl+'/api/order/status',{orderId,status:event.target.value},{headers:{token}})
+      if(response.data.success) {
+        await fetchAllOrders()
       }
+    }catch (error) {
+      console.log(error)
+      toast.error(response.data.message)
     }
   }
 
@@ -51,7 +51,7 @@ const Orders = () => {
       <div>
         {
           orders.map((order,index)=>(
-            <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-gray-200 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700' key={index}>
+            <div key={index} className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-gray-200 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700'>
               <img className='w-12' src={assets.parcel_icon} alt="" />
               <div>
                 {order.items.map((item,index)=>{
@@ -63,7 +63,7 @@ const Orders = () => {
                 })}
               </div>
               <div>
-              <p className='mt-3 mb-2 font-medium'>{order.address.firstname+" "+order.address.lastname}</p>
+              <p className='mt-3 mb-2 font-medium'>{order.address.firstName+" "+order.address.lastName}</p>
               <div>
                 <p>{order.address.street+","}</p>
                 <p>{order.address.city+", "+order.address.state+","+order.address.country+","+order.address.zipcode}</p>

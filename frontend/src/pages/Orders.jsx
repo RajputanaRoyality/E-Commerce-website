@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Titles from '../components/Titles';
+import { toast } from 'react-toastify';
+import axios from 'axios'
 
 const Orders = () => {
 
@@ -13,24 +15,25 @@ const Orders = () => {
       if(!token){
         return null
       }
-      const response=await axios.post(backendUrl+'/api/order/userorders',{},{headers:{token}})
-      if(response.data.success){
+      const response=await axios.post(backendUrl+'/api/order/userOrders',{},{headers:{token}})
+      if(response.data.success) {
         let allOrdersItem=[]
         response.data.orders.map((order)=>{
           order.items.map((item)=>{
             item['status']=order.status
             item['payment']=order.payment
             item['paymentMethod']=order.paymentMethod
-            item['data']=order.date
+            item['date']=order.date
             allOrdersItem.push(item)
           })
         })
-        setOrderData(allOrdersItem.reverse());
-        
+        setOrderData(allOrdersItem.reverse())
       }
       
     }catch(error){
-
+      console.log(error);
+      toast.error(error.message)
+      
     }
   }
 
@@ -57,7 +60,7 @@ const Orders = () => {
                     <p>Size: {item.size}</p>
                   </div>
                   <p className='mt-1'>Date: <span className='text-gray-400'>{new Date(item.date).toDateString()}</span></p>
-                  <p className='mt-1'>Payment: <span className='text-gray-400'>{new Date(item.paymentMethod)}</span></p>
+                  <p className='mt-1'>Payment: <span className='text-gray-400'>{item.paymentMethod}</span></p>
                 </div>
                 
               </div>

@@ -21,7 +21,7 @@ const addToCart=async(req,res)=>{
         }
 
         await userModel.findByIdAndUpdate(userId,{cartData})
-        res.join({success:true,message:'Add To Cart'})
+        res.json({success:true,message:'Add To Cart'})
 
     }catch(error){
         console.log(error)
@@ -34,7 +34,7 @@ const addToCart=async(req,res)=>{
 
 const updateCart=async(req,res)=>{
     try{
-        const {userId,itemId,size,quanity}=req.body
+        const {userId,itemId,size,quantity}=req.body
 
         const userData=await userModel.findById(userId)
         let cartData=await userData.cartData;
@@ -42,7 +42,7 @@ const updateCart=async(req,res)=>{
         cartData[itemId][size]=quantity
 
         await userModel.findByIdAndUpdate(userId,{cartData})
-        res.join({success:true,message:"Cart Updated"})
+        res.json({success:true,message:"Cart Updated"})
     }
     catch(error){
         console.log(error)
