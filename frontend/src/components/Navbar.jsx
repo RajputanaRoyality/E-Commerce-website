@@ -16,7 +16,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className='flex items-center justify-between py-4 font-medium bg-gray-200 z-20'>
+        <div className='flex items-center justify-between py-4 font-medium bg-gray-200 z-1'>
             <Link to='/'><img src={assets.logo} alt="" className='ml-10 h-15 w-20' /><h2 className='ml-10 font-bold text-red-900'>Vaiso Store</h2></Link>
 
             <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>

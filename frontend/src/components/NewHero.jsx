@@ -218,7 +218,7 @@ const NewHero = () => {
                     </div>
 
                     {/* ______ Hero Image ______ */}
-                    <div className="flex flex-col justify-end items-center relative order-1 md:order-2 ">
+                    <div className="flex flex-col justify-end items-center relative order-1 md:order-2 -z-100">
                         <AnimatePresence mode="wait">
                             <motion.img
                                 key={activeData.id}
@@ -236,7 +236,7 @@ const NewHero = () => {
                                 }}
                                 src={activeData.image}
                                 alt=""
-                                className="lg:h-[450px] md:h-[300px] md:w-[300px] md:mb-50 xl:w-[450px] sm:ml-7 sm:w-[450px] img-shadow relative lg:mb-40 z-2 mt-40"
+                                className="lg:h-[450px] md:h-[300px] md:w-[300px] md:mb-50 xl:w-[450px] sm:ml-7 sm:w-[450px] img-shadow relative lg:mb-40 mt-40 -z-10"
                             />
                         </AnimatePresence>
                         <AnimatePresence mode="wait">
@@ -253,7 +253,7 @@ const NewHero = () => {
                                         duration: 0.4,
                                     },
                                 }}
-                                className="text-white/5 text-[300px] font-poppins mt-100 font-extrabold absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-100"
+                                className="text-white/5 text-[300px] font-poppins mt-100 font-extrabold absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 -z-100"
                             >
                                 {activeData.modal}
                             </motion.div>
