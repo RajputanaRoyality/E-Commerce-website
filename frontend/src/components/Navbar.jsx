@@ -16,12 +16,12 @@ const Navbar = () => {
     }
 
     return (
-        <div className='flex items-center justify-between py-5 font-medium'>
-            <Link to='/'><img src={assets.logo} alt="" /></Link>
+        <div className='flex items-center justify-between py-4 font-medium bg-gray-200'>
+            <Link to='/'><img src={assets.logo} alt="" className='ml-10 h-15 w-20' /><h2 className='ml-10 font-bold text-red-900'>Vaiso Store</h2></Link>
 
             <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
 
-
+            <div className='flex flex-row lg:gap-20 sm:gap-5 items-center'>
                 <NavLink to='/' className='flex flex-col items-center gap-1'>
                     <p>HOME</p>
                     <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
@@ -41,10 +41,11 @@ const Navbar = () => {
                     <p>CONTACT</p>
                     <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
                 </NavLink>
+                </div>
 
             </ul>
 
-            <div className='flex items-center gap-6'>
+            <div className='flex items-center gap-8 mr-10'>
                 <img onClick={() => setShowSearch(true)} src={assets.search_icon} className='w-5 pointer' alt="" />
 
                 <div className='group relative'>

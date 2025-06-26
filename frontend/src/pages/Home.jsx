@@ -1,17 +1,16 @@
 import React from 'react'
-import Hero from '../components/Hero'
 import LatestCollection from '../components/LatestCollection'
 import BestSeller from '../components/BestSeller'
 import OurPolicies from '../components/OurPolicies'
 import NewsLetterBox from '../components/NewsLetterBox'
-import Collection from './Collection'
+import NewHero from '../components/NewHero'
 
 const Home = () => {
   return (
     <div>
-      <Hero/>
-      <LatestCollection/>
-      <BestSeller/>
+      <NewHero/>
+      <div className='lg:px-[5vh]'><LatestCollection/></div>
+      <div className='lg:px-[5vh]'><BestSeller/></div>
       <OurPolicies/>
       <NewsLetterBox/>
     </div>
