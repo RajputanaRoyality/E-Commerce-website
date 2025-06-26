@@ -4,6 +4,7 @@ import Fanta2 from "../assets/fanta2.jpg";
 import Fanta3 from "../assets/fanta3.jpg";
 import { FaWhatsapp } from "react-icons/fa";
 import { AnimatePresence, easeInOut, motion } from "framer-motion";
+import Navbar from "./Navbar";
 
 
 const SlideRight = (delay) => {
@@ -41,7 +42,7 @@ const headphoneData = [
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae iusto minima ad ut id eos iusto minima ad ut id eos ad ut id eos",
         price: "Women Store",
         newPrice:"Trendy",
-        modal: "Women's Fashion",
+        modal: "Fashion",
         bgColor: "#202020",
     },
     {
@@ -235,7 +236,7 @@ const NewHero = () => {
                                 }}
                                 src={activeData.image}
                                 alt=""
-                                className="lg:h-[450px] md:h-[300px] md:w-[300px] md:mb-50 xl:w-[450px] sm:ml-7 sm:w-[450px] img-shadow relative mt-20 lg:mb-40 z-10"
+                                className="lg:h-[450px] md:h-[300px] md:w-[300px] md:mb-50 xl:w-[450px] sm:ml-7 sm:w-[450px] img-shadow relative lg:mb-40 z-2 mt-40"
                             />
                         </AnimatePresence>
                         <AnimatePresence mode="wait">
@@ -252,7 +253,7 @@ const NewHero = () => {
                                         duration: 0.4,
                                     },
                                 }}
-                                className="text-white/5 text-[300px] font-poppins font-extrabold absolute top-0 -translate-x-1/2 -translate-y-1/2 z-0"
+                                className="text-white/5 text-[300px] font-poppins mt-100 font-extrabold absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 z-100"
                             >
                                 {activeData.modal}
                             </motion.div>

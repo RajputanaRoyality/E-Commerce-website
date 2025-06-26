@@ -16,13 +16,12 @@ const Navbar = () => {
     }
 
     return (
-        <div className='flex items-center justify-between py-4 font-medium bg-gray-200'>
+        <div className='flex items-center justify-between py-4 font-medium bg-gray-200 z-20'>
             <Link to='/'><img src={assets.logo} alt="" className='ml-10 h-15 w-20' /><h2 className='ml-10 font-bold text-red-900'>Vaiso Store</h2></Link>
 
             <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
-
-            <div className='flex flex-row lg:gap-20 sm:gap-5 items-center'>
-                <NavLink to='/' className='flex flex-col items-center gap-1'>
+                <div className='flex flex-row gap-10'>
+                <NavLink to='/' className='flex flex-col items-center gap-1 '>
                     <p>HOME</p>
                     <hr className='w-2/4 border-none h-[1.5px] bg-gray-700 hidden' />
                 </NavLink>
