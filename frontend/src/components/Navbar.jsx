@@ -68,7 +68,7 @@ const Navbar = () => {
             </div>
 
             {/*sidebar*/}
-            <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`} >
+            <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-[300px] h-[270px] z-2' : 'w-0'}`} >
                 <div className='flex items-center gap-4 p-3 cursor-pointer'>
                     <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3'>
                         <img src={assets.dropdown_icon} className='h-4 rotate-180' alt="" />
@@ -77,7 +77,7 @@ const Navbar = () => {
 
 
                 </div>
-                <div className='flex-row py-2 m-1 pl-6 border'>
+                <div className='flex py-2 m-1 pl-6 border'>
                     <NavLink onClick={() => setVisible(false)} to='/'>HOME</NavLink></div>
                 <div className='py-2 m-1 pl-6 border'><NavLink onClick={() => setVisible(false)} to='/collection'>COLLECTION</NavLink></div>
                 <div className='py-2 m-1 pl-6 border'><NavLink onClick={() => setVisible(false)} to='/about'>ABOUT</NavLink></div>
