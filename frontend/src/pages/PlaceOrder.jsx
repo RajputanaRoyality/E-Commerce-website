@@ -33,61 +33,77 @@ const PlaceOrder = () => {
   
 
   const onSubmitHandler = async (event) => {
-    event.preventDefault()
-    try{
-      let orderItems=[]
+    event.preventDefault();
+    try {
+      let orderItems = [];
 
-      for(const items in cartItems){
-        for(const item in cartItems[items]){
-          if(cartItems[items][item]>0){
-            const itemInfo=structuredClone(products.find(product=>products._id===items))
-            if(itemInfo){
-              itemInfo.size=item
-              itemInfo.quanity=cartItems[items][item]
-              orderItems.push(itemInfo)
+      for (const items in cartItems) {
+        for (const item in cartItems[items]) {
+          if (cartItems[items][item] > 0) {
+            const itemInfo = structuredClone(products.find(product => product._id === items)); // ✅ fix: products._id → product._id
+            if (itemInfo) {
+              itemInfo.size = item;
+              itemInfo.quantity = cartItems[items][item]; // ✅ spelling fix: quantity
+              orderItems.push(itemInfo);
             }
           }
         }
       }
-      let orderData={
-        address:formData,
-        items:orderItems,
-        amount:getCartAmount() + delivery_fee
-      }
 
-      switch(method){
-        //API calls for COD
+      let orderData = {
+        address: formData,
+        items: orderItems,
+        amount: getCartAmount() + delivery_fee,
+      };
+
+      switch (method) {
         case 'cod':
-          const response=await axios.post(backendUrl+'/api/order/place',orderData,{headers:{token}})
-          
-          if(response.data.success){
-            setCartItems({})
-            navigate('/orders')
-          }else{
-            toast.error(response.data.message)
+          const response = await axios.post(
+            backendUrl + '/api/order/place',
+            orderData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // ✅ fixed
+              },
+            }
+          );
+
+          if (response.data.success) {
+            setCartItems({});
+            navigate('/orders');
+          } else {
+            toast.error(response.data.message);
           }
           break;
 
         case 'stripe':
-            const responseStripe=await axios.post(backendUrl+ '/api/order/stripe',orderData,{headers:{token}})
-            if(responseStripe.data.success){
-              const {session_url}=responseStripe.data
-              window.location.replace(session_url)
-            }else{
-              toast.error(responseStripe.data.message)
+          const responseStripe = await axios.post(
+            backendUrl + '/api/order/stripe',
+            orderData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // ✅ fixed
+              },
             }
+          );
 
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url);
+          } else {
+            toast.error(responseStripe.data.message);
+          }
           break;
-        
 
         default:
           break;
       }
-    }catch(error){
-      console.log(error);
-      toast.error(error.message)
+    } catch (error) {
+      console.error("Place Order Error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
-  }
+  };
+
 
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>

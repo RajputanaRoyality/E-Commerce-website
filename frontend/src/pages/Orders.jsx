@@ -10,32 +10,40 @@ const Orders = () => {
 
   const [orderData,setOrderData]=useState([])
 
-  const loadOrderData=async()=>{
-    try{
-      if(!token){
-        return null
+  const loadOrderData = async () => {
+    try {
+      if (!token) return null;
+
+      const response = await axios.post(
+        backendUrl + '/api/order/userOrders',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // ✅ FIXED HERE
+          },
+        }
+      );
+
+      if (response.data.success) {
+        let allOrdersItem = [];
+        response.data.orders.forEach((order) => {
+          order.items.forEach((item) => {
+            item.status = order.status;
+            item.payment = order.payment;
+            item.paymentMethod = order.paymentMethod;
+            item.date = order.date;
+            allOrdersItem.push(item);
+          });
+        });
+        setOrderData(allOrdersItem.reverse());
       }
-      const response=await axios.post(backendUrl+'/api/order/userOrders',{},{headers:{token}})
-      if(response.data.success) {
-        let allOrdersItem=[]
-        response.data.orders.map((order)=>{
-          order.items.map((item)=>{
-            item['status']=order.status
-            item['payment']=order.payment
-            item['paymentMethod']=order.paymentMethod
-            item['date']=order.date
-            allOrdersItem.push(item)
-          })
-        })
-        setOrderData(allOrdersItem.reverse())
-      }
-      
-    }catch(error){
-      console.log(error);
-      toast.error(error.message)
-      
+
+    } catch (error) {
+      console.error("loadOrderData error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
-  }
+  };
+
 
   useEffect(()=>{
     loadOrderData()

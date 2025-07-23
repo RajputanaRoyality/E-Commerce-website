@@ -12,8 +12,9 @@ const stripe=new Stripe(process.env.STRIPE_SECRET_KEY)
 
 //placing orders using COD method
 const placeOrder=async(req,res)=>{
-    try{
-        const {userId,items,amount,address}=req.body
+    try {
+        const userId = req.user.id;
+        const {items,amount,address}=req.body
 
         const orderData={
             userId,
@@ -129,7 +130,7 @@ const allOrders=async(req,res)=>{
 //All orders data for frontend
 const userOrders=async(req,res)=>{
     try{
-        const {userId}=req.body
+        const userId  = req.user.id;
         const orders=await orderModel.find({userId})
         res.json({success:true,orders})
     }catch(error){
