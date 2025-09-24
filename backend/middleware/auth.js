@@ -12,7 +12,7 @@ const authUser = async (req, res, next) => {
 
     try {
         const token_decode = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = { id: token_decode.id }; // ✅ safe and conventional
+        req.user = { id: token_decode.id };
         next();
     } catch (error) {
         console.error('JWT Error:', error.message);
